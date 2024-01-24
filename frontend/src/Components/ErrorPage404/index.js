@@ -1,8 +1,8 @@
 const ErrorPage404 = () => {
   return (
     <div>
-      <h1>404</h1>
-      <h2>Page not found</h2>
+      <h1>Error</h1>
+      <h2>Please check the web address or try again later.</h2>
     </div>
   );
 };

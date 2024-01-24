@@ -1,17 +1,253 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: "Montserrat", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.login {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(
+		to bottom right,
+		white 50%,
+		#b58ded 50%,
+		#1b8af1 100%
+	);
+	min-height: 100vh;
+}
+
+.login__container {
+	background-color: white;
+	box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	padding: 50px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.login__form h4 {
+	margin: 20px 0 10px;
+}
+
+.login__form input {
+	box-sizing: border-box;
+	border: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 10px;
+	width: 100%;
+}
+
+.login__form input:focus {
+	outline: none;
+}
+
+.login__signInButton {
+	color: white;
+	background-color: #754ef9;
+	border: #754ef9 solid 1px;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin-top: 30px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.login__signInButton:hover {
+	background-color: white;
+	color: #754ef9;
+	transition: all 0.2s ease-in-out;
+	border: #754ef9 solid 1px;
+}
+
+.login__registerPara {
+	margin-top: 50px;
+}
+
+.login__registerButton {
+	color: #754ef9;
+	text-decoration: none;
+}
+
+.login__registerButton:hover {
+	text-decoration: underline;
+}
+
+.register__form {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 30px;
+}
+
+.register__form h4 {
+	margin: 20px 0 10px;
+}
+
+.register__form input:not([type="radio"]):not([type="checkbox"]),
+.register__form select{
+	box-sizing: border-box;
+	border: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 10px;
+	width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.register__form input:focus {
+	outline: none;
+}
+
+.register__button {
+	color: white;
+	background-color: #754ef9;
+	border: #754ef9 solid 1px;
+	border-radius: 5px;
+	padding: 10px 20px;
+  margin-top: 30px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.register__button:hover {
+	background-color: white;
+	color: #754ef9;
+	transition: all 0.2s ease-in-out;
+	border: #754ef9 solid 1px;
+}
+
+.dashboard__container {
+	margin: 50px;
+}
+
+.dashboard__container__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 30px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	background-color: #754ef9;
+	color: white;
+}
+
+.dashboard__container__header p {
+	margin: 25px 0;
+	font-size: 20px;
+}
+
+.pagination {
+	display: flex;
+	gap: 20px;
+}
+
+.filter__container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.filter__container input {
+	box-sizing: border-box;
+	border: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.filter__container input:focus {
+	outline: none;
+}
+
+.dashboard__container__header select {
+	box-sizing: border-box;
+	border: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.dashboard__container__header select:focus {
+	outline: none;
+}
+
+
+.dashboard__container__body {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 50px;
+	padding: 50px 0 30px;
+}
+
+.dashboard__container__body__card {
+	background-color: white;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	transition: all 0.4s ease-in-out;
+	cursor: pointer;
+}
+
+.dashboard__container__body__card:hover {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	transition: all 0.4s ease-in-out;
+}
+
+.dashboard__container__body__card .name__paragraph {
+	margin-top: 0;
+}
+
+.dashboard__container__body__card .bx {
+	font-size: 25px;
+	cursor: pointer;
+	margin: 0 5px;
+	color: #9f9f9f;
+	transition: all 0.2s ease-in-out;
+}
+
+.dashboard__container__body__card .bx-edit:hover {
+	color: #754ef9;
+	transition: all 0.2s ease-in-out;
+}
+
+.dashboard__container__body__card .bx-trash:hover {
+	color: red;
+	transition: all 0.2s ease-in-out;
+}
+
+.add__btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	background-color: #754ef9;
+	color: white;
+	font-size: 30px;
+	border: none;
+	border-radius: 50%;
+	padding: 15px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
 }

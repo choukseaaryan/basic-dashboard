@@ -1,0 +1,21 @@
+.details__container {
+  margin: 50px;
+}
+
+.details__container__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details__container__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 30px;
+  margin: 30px 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+

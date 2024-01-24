@@ -1,7 +1,7 @@
 const PageLoader = () => {
   return (
     <div className="page-loader">
-      <div className="loader"></div>
+      <div className="loader">Loading...</div>
     </div>
   );
 };
