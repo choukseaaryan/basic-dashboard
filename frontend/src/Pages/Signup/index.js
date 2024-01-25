@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { HANDLE_SIGNUP } from "../../Redux/actions/admin";
 
 const Signup = () => {
+	const dispatch = useDispatch();
 	const [data, setData] = useState({
 		name: "",
 		email: "",
@@ -52,7 +55,12 @@ const Signup = () => {
       return;
     }
 
-		toast.success("Registration Successful!");
+		dispatch(HANDLE_SIGNUP({ payload: data })).then((res) => {
+			console.log(res)
+			if (res?.success) {
+				window.location.href = "/login";
+			}
+		});
 	};
 
 	const changeHandler = (e) => {
@@ -112,7 +120,7 @@ const Signup = () => {
 						<input
 							name="password"
 							type="password"
-							placeholder="Enter E-mail"
+							placeholder="Enter Password"
 							onChange={changeHandler}
 						/>
 					</div>
@@ -196,8 +204,8 @@ const Signup = () => {
 						<h4>City</h4>
 						<select onChange={changeHandler} name="city">
 							<option value="">Select city</option>
-							{cityArray.map((city) => {
-								return <option value={city}>{city}</option>;
+							{cityArray.map((city, i) => {
+								return <option key={i} value={city}>{city}</option>;
 							})}
 						</select>
 					</div>
@@ -209,8 +217,8 @@ const Signup = () => {
 							onChange={changeHandler}
 						/>
 						<datalist id="states">
-							{stateArray.map((state) => {
-								return <option value={state} />;
+							{stateArray.map((state, i) => {
+								return <option key={i} value={state} />;
 							})}
 						</datalist>
 					</div>

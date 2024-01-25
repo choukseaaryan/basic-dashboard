@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { HANDLE_LOGIN } from "../../Redux/actions/admin";
 
 const Login = () => {
 	const [data, setData] = useState({
 		email: "",
 		password: ""
 	});
+	
+  const dispatch = useDispatch();
 
-	const submitHandler = (e) => {
-		console.log(data);
-		
+	const submitHandler = (e) => {		
 		if(!data.email || !data.password) {
 			toast.error("Please fill all fields!");
 			return;
 		}
-
-		toast.success("Login Successful!");
+		
+		dispatch(HANDLE_LOGIN({ payload: data })).then((res) => {
+			if (res?.success) {
+				window.location.href = "/";
+			}
+		});
 	};
 
 	const changeHandler = (e) => {

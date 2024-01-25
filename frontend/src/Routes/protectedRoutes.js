@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-	const isAuth = localStorage.getItem("accessToken") !== null ? true : false;
+	const isAuth = sessionStorage.getItem("profileInfo");
+	console.log(isAuth);
 
-	return !isAuth ? (
-		<div className="relative">
+	return isAuth ? (
+		<div>
 			<Outlet />
 		</div>
 	) : (
