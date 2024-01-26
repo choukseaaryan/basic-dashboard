@@ -13,10 +13,10 @@ Open the `.env` file and add the following line in it:<br/><br/>
 ### Step 3
 Open a terminal in `/frontend` directory.
 
-### Step 3
+### Step 4
 Use command `npm install` to install the required node modules.
 
-### Step 4
+### Step 5
 Use command `npm start` to run the frontend server.
 
 <br/>
