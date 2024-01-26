@@ -1,41 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../../Components/Modal/delete";
 import EditModal from "../../Components/Modal/edit";
 import AddModal from "../../Components/Modal/add";
 import NoDataComponent from "../../Components/NoDataComponent";
+import { GET_USERS } from "../../Redux/actions/user";
 
 const HomePage = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-  const [addModal, setAddModal] = useState(false);
+	const [addModal, setAddModal] = useState(false);
 	const [editModal, setEditModal] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limit, setLimit] = useState(10);
+	const [search, setSearch] = useState("");
+	const [sort, setSort] = useState("a-z");
+	const [filteredData, setFilteredData] = useState([]);
 
-	const data = Array.from({ length: 100 }, (_, i) => ({
-		id: i + 1,
-		name: `User ${i + 1}`,
-		email: `user${i + 1}@example.com`,
-		phone: `123456789${i + 1}`,
-	}));
+	const userData = useSelector((state) => state?.user?.users);
 
-	const totalPages = Math.ceil(data?.length / limit);
+	// const data = Array.from({ length: 100 }, (_, i) => ({
+	// 	id: i + 1,
+	// 	name: `User ${i + 1}`,
+	// 	email: `user${i + 1}@example.com`,
+	// 	phone: `123456789${i + 1}`,
+	// }));
+
+	const totalPages = Math.ceil(filteredData?.length / limit);
 
 	const handlePageChange = (event) => {
 		setCurrentPage(Number(event.target.value));
 	};
 
-	const limitHandler = (e) => {
+	const handleLimit = (e) => {
 		setLimit(e.target.value);
-    setCurrentPage(1);
+		setCurrentPage(1);
 	};
+
+	const handleSort = (e) => {
+		setSort(e.target.value);
+	};
+	useEffect(() => {
+		if (sort === "a-z") {
+			setFilteredData((prevData) =>
+				[...prevData].sort((a, b) => a?.name?.localeCompare(b?.name))
+			);
+		} else if (sort === "z-a") {
+			setFilteredData((prevData) =>
+				[...prevData].sort((a, b) => b?.name?.localeCompare(a?.name))
+			);
+		} else if (sort === "modified") {
+			setFilteredData((prevData) =>
+				[...prevData].sort((a, b) =>
+					b?.updatedAt?.localeCompare(a?.updatedAt)
+				)
+			);
+		} else if (sort === "inserted") {
+			setFilteredData((prevData) =>
+				[...prevData].sort((a, b) =>
+					b?.createdAt?.localeCompare(a?.createdAt)
+				)
+			);
+		}
+	}, [sort]);
 
 	const startIndex = (currentPage - 1) * limit;
 	const endIndex = startIndex + limit;
-	const currentItems = data?.slice(startIndex, endIndex);
+	const currentItems = filteredData?.slice(startIndex, endIndex);
+
+	const handleSearch = (e) => {
+		setSearch(e.target.value);
+	};
+
+	useEffect(() => {
+		dispatch(GET_USERS({ payload: { str: search } }));
+		setCurrentPage(1);
+	}, [dispatch, search]);
+
+	useEffect(() => {
+		setFilteredData(userData);
+	}, [userData]);
 
 	return (
 		<div className="dashboard__container">
@@ -44,17 +92,19 @@ const HomePage = () => {
 					<p>
 						Showing &nbsp;
 						{
-							<select onChange={limitHandler}>
+							<select onChange={handleLimit}>
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="50">50</option>
-								<option value={data?.length}>All</option>
+								<option value={filteredData?.length}>
+									All
+								</option>
 							</select>
 						}
 						&nbsp; Users
 					</p>
 					<p>
-            Page: &nbsp;
+						Page: &nbsp;
 						<select value={currentPage} onChange={handlePageChange}>
 							{Array.from({ length: totalPages }, (_, i) => (
 								<option key={i + 1} value={i + 1}>
@@ -62,14 +112,18 @@ const HomePage = () => {
 								</option>
 							))}
 						</select>
-              &nbsp; of {totalPages}
+						&nbsp; of {totalPages || 0}
 					</p>
 				</div>
 
 				<div className="filter__container">
-					<input name="query" type="text" placeholder="Search" />
+					<input
+						type="text"
+						placeholder="Search By Name/Email/Phone"
+						onChange={handleSearch}
+					/>
 					<p>Sort By:</p>
-					<select name="sort">
+					<select onChange={handleSort}>
 						<option value="a-z">A-Z</option>
 						<option value="z-a">Z-A</option>
 						<option value="modified">Last Modified</option>
@@ -78,53 +132,57 @@ const HomePage = () => {
 				</div>
 			</div>
 			<div className="dashboard__container__body">
-				{data ? currentItems.map((user) => (
-					<div
-						key={user.id}
-						className="dashboard__container__body__card"
-						onClick={() => navigate(`/details/${user.id}`)}
-					>
-						<div>
-							<p className="name__paragraph">
-								<b>Name:</b> {user.name}
-							</p>
-							<p>
-								<b>Email:</b> {user.email}
-							</p>
-							<p>
-								<b>Phone:</b> {user.phone}
-							</p>
+				{filteredData ? (
+					currentItems.map((user) => (
+						<div
+							key={user._id}
+							className="dashboard__container__body__card"
+							onClick={() => navigate(`/details/${user.id}`)}
+						>
+							<div>
+								<p className="name__paragraph">
+									<b>Name:</b> {user.name}
+								</p>
+								<p>
+									<b>Email:</b> {user.email}
+								</p>
+								<p>
+									<b>Phone:</b> {user.phone}
+								</p>
+							</div>
+							<div>
+								<i
+									onClick={(e) => {
+										e.stopPropagation();
+										setSelectedUser(user);
+										setEditModal(true);
+									}}
+									className="bx bx-edit"
+								></i>
+								<i
+									onClick={(e) => {
+										e.stopPropagation();
+										setSelectedUser(user);
+										setDeleteModal(true);
+									}}
+									className="bx bx-trash"
+								></i>
+							</div>
 						</div>
-						<div>
-							<i
-								onClick={(e) => {
-									e.stopPropagation();
-									setSelectedUser(user);
-									setEditModal(true);
-								}}
-								className="bx bx-edit"
-							></i>
-							<i
-								onClick={(e) => {
-									e.stopPropagation();
-									setSelectedUser(user);
-									setDeleteModal(true);
-								}}
-								className="bx bx-trash"
-							></i>
-						</div>
-					</div>
-				)) : (<NoDataComponent />)}
+					))
+				) : (
+					<NoDataComponent />
+				)}
 			</div>
 
-      <button className="add__btn" onClick={() => setAddModal(true)}>
-        <i className="bx bx-plus"></i>
-      </button>
+			<button className="add__btn" onClick={() => setAddModal(true)}>
+				<i className="bx bx-plus"></i>
+			</button>
 
-      {addModal && <AddModal setIsOpen={setAddModal} />}
+			{addModal && <AddModal setIsOpen={setAddModal} />}
 
 			{deleteModal && (
-				<DeleteModal setIsOpen={setDeleteModal} id={selectedUser.id} />
+				<DeleteModal setIsOpen={setDeleteModal} id={selectedUser._id} />
 			)}
 
 			{editModal && (

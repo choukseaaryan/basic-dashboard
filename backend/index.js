@@ -5,10 +5,10 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const router = express.Router();
-// const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/user");
 
-// router.use("/", userRoutes);
+router.use("/", userRoutes);
 router.use("/", adminRoutes);
 
 const app = express();
