@@ -29,7 +29,7 @@ const MakeProtectedApiCall = async (apiPath, method, bodyData = {}) => {
 	switch (method.toLowerCase()) {
 		case "get":
 			try {
-				const res = await axios.get(apiPath, bodyData);
+				const res = await axios.get(apiPath);
 				return res;
 			} catch (error) {
 				const msg = error.response?.data?.msg;

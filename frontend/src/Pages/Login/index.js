@@ -8,10 +8,12 @@ const Login = () => {
 		email: "",
 		password: ""
 	});
-	
-  const dispatch = useDispatch();
 
-	const submitHandler = (e) => {		
+	const [showPassword, setShowPassword] = useState(false);
+
+	const dispatch = useDispatch();
+
+	const submitHandler = (e) => {    
 		if(!data.email || !data.password) {
 			toast.error("Please fill all fields!");
 			return;
@@ -31,6 +33,10 @@ const Login = () => {
 		}));
 	};
 
+	const toggleShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
+
 	return (
 		<div className="login">
 			<div className="login__container">
@@ -45,12 +51,18 @@ const Login = () => {
 					/>
 
 					<h4>Password</h4>
-					<input
-						name="password"
-						type="password"
-						placeholder="Enter Password"
-						onChange={changeHandler}
-					/>
+					<div className="password__container">
+						<input
+							name="password"
+							type={showPassword ? "text" : "password"}
+							placeholder="Enter Password"
+							onChange={changeHandler}
+							className="password__input"
+						/>
+						<button className="toggle__passwordBtn" onClick={toggleShowPassword}>
+							{showPassword ? <i class='bx bx-hide'></i> : <i class='bx bx-show'></i>}
+						</button>
+					</div>
 
 					<button onClick={submitHandler} className="login__signInButton">
 						Login

@@ -32,7 +32,6 @@ const login = async (req, res) => {
 			msg: "Login Successful",
 			data: adminData,
 		};
-		console.log(adminData)
 		return response.success(obj);
 	} catch (err) {
 		handleException(res, err);
@@ -57,7 +56,7 @@ const signup = async (req, res) => {
 
 		const passwordHash = bcrypt.hashSync(password, 10);
 
-		await adminModel.create({
+		const newAdminData = await adminModel.create({
 			name,
 			email: {
 				id: email,
@@ -73,7 +72,7 @@ const signup = async (req, res) => {
 		const obj = {
 			res,
 			msg: "Registration Successful!",
-			data: adminData,
+			data: newAdminData,
 		};
 
 		return response.success(obj);

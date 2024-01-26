@@ -16,8 +16,14 @@ const Signup = () => {
 		state: "",
 	});
 
+	const [showPassword, setShowPassword] = useState(false);
+
 	const cityArray = ["Mumbai", "Pune", "Ahmedabad"];
 	const stateArray = ["Gujarat", "Maharashtra", "Karnataka"];
+
+	const toggleShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
 
 	const submitHandler = () => {
 		const { email, password, name, phone, gender, source, city, state } =
@@ -50,13 +56,12 @@ const Signup = () => {
 			return;
 		}
 
-    if (!stateArray.includes(state)) {
+		if (!stateArray.includes(state)) {
 			toast.error("Please enter a valid state!");
-      return;
-    }
+			return;
+		}
 
 		dispatch(HANDLE_SIGNUP({ payload: data })).then((res) => {
-			console.log(res)
 			if (res?.success) {
 				window.location.href = "/login";
 			}
@@ -117,12 +122,25 @@ const Signup = () => {
 					</div>
 					<div>
 						<h4>Password</h4>
-						<input
-							name="password"
-							type="password"
-							placeholder="Enter Password"
-							onChange={changeHandler}
-						/>
+						<div className="password__container">
+							<input
+								name="password"
+								type={showPassword ? "text" : "password"}
+								placeholder="Enter Password"
+								onChange={changeHandler}
+								className="password__input"
+							/>
+							<button
+								className="toggle__passwordBtn"
+								onClick={toggleShowPassword}
+							>
+								{showPassword ? (
+									<i class="bx bx-hide"></i>
+								) : (
+									<i class="bx bx-show"></i>
+								)}
+							</button>
+						</div>
 					</div>
 					<div>
 						<h4>Gender</h4>
@@ -205,7 +223,11 @@ const Signup = () => {
 						<select onChange={changeHandler} name="city">
 							<option value="">Select city</option>
 							{cityArray.map((city, i) => {
-								return <option key={i} value={city}>{city}</option>;
+								return (
+									<option key={i} value={city}>
+										{city}
+									</option>
+								);
 							})}
 						</select>
 					</div>

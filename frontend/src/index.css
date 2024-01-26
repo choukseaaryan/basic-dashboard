@@ -47,6 +47,25 @@ body {
 	outline: none;
 }
 
+.password__container {
+	position: relative;
+}
+
+.password__input {
+	padding-right: 40px;
+}
+
+.toggle__passwordBtn {
+	background: none;
+  border: none;
+  padding: 0;
+	font-size: 18px;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 .login__signInButton {
 	color: white;
 	background-color: #754ef9;
@@ -170,6 +189,7 @@ input[type="number"] {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
 	padding: 10px;
+	width: 250px;
 }
 
 .filter__container input:focus {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "./modal.css";
+import { ADD_USER, GET_USERS } from "../../Redux/actions/user";
 
 const AddModal = ({ setIsOpen }) => {
 	const [data, setData] = useState({
@@ -8,6 +10,8 @@ const AddModal = ({ setIsOpen }) => {
 		email: "",
 		phone: "",
 	});
+
+	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setData((prevData) => ({
@@ -37,7 +41,11 @@ const AddModal = ({ setIsOpen }) => {
 			return;
 		}
 
-		toast.success("User Added Successfully!");
+		dispatch(ADD_USER({ payload: data })).then((res) => {
+			if (res?.success) {
+				dispatch(GET_USERS({}));
+			}
+		});
 		setIsOpen(false);
 	};
 	return (
