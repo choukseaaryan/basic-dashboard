@@ -32,10 +32,10 @@ Open the `.env` file and add the following line in it:<br/><br/>
 ### Step 3
 Open a new terminal in `/backend` directory.
 
-### Step 2
+### Step 4
 Run `npm install` to install required packages.
 
-### Step 3
+### Step 5
 Finally, use `npm start` to run the backend server.
 
 Both the frontend and backend servers should start and be available on `http://localhost:3000/` and `http://localhost:3001/` respectively.<br/>
