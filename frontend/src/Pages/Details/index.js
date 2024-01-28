@@ -49,15 +49,15 @@ const Details = () => {
 				</div>
 				<div className="details__container__body__item">
 					<h3>Name</h3>
-					<p>{user.name}</p>
+					<p>{user?.name || "Not Available"}</p>
 				</div>
 				<div className="details__container__body__item">
 					<h3>Email</h3>
-					<p>{user.email}</p>
+					<p>{user?.email || "Not Available"}</p>
 				</div>
 				<div className="details__container__body__item">
 					<h3>Phone</h3>
-					<p>{user.phone}</p>
+					<p>{user?.phone || "Not Available"}</p>
 				</div>
 			</div>
 		</div>

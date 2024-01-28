@@ -12,7 +12,7 @@ const login = async (req, res) => {
 		if (!adminData) {
 			const obj = {
 				res,
-				msg: "Email Not Found!",
+				msg: "Email Does Not Exist",
 			};
 
 			return response.error(obj);
@@ -21,7 +21,7 @@ const login = async (req, res) => {
 		if (!bcrypt.compareSync(password, adminData?.email?.password)) {
 			const obj = {
 				res,
-				msg: "Incorrect Password!",
+				msg: "Incorrect Password",
 			};
 
 			return response.error(obj);
@@ -49,7 +49,7 @@ const signup = async (req, res) => {
 		if (adminData) {
 			const obj = {
 				res,
-				msg: "Email Already Exists!",
+				msg: "Email Already Exists",
 			};
 
 			return response.error(obj);
@@ -72,7 +72,7 @@ const signup = async (req, res) => {
 
 		const obj = {
 			res,
-			msg: "Registration Successful!",
+			msg: "Registration Successful",
 			data: newAdminData,
 		};
 
