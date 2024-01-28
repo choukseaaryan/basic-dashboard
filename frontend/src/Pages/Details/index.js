@@ -31,36 +31,36 @@ const Details = () => {
 		};
 		fetchUser();
 	}, [dispatch, userId]);
-	if (loading) {
-		return <PageLoader />;
-	}
 	if (error) {
 		return <ErrorPage404 />;
 	}
 	return (
-		<div className="details__container">
-			<div className="details__container__header">
-				<h1>Details</h1>
+		<>
+			{loading && <PageLoader />}
+			<div className="details__container">
+				<div className="details__container__header">
+					<h1>Details</h1>
+				</div>
+				<hr />
+				<div className="details__container__body">
+					<div className="details__container__body__item">
+						<img src="https://via.placeholder.com/150" alt="user" />
+					</div>
+					<div className="details__container__body__item">
+						<h3>Name</h3>
+						<p>{user?.name || "Not Available"}</p>
+					</div>
+					<div className="details__container__body__item">
+						<h3>Email</h3>
+						<p>{user?.email || "Not Available"}</p>
+					</div>
+					<div className="details__container__body__item">
+						<h3>Phone</h3>
+						<p>{user?.phone || "Not Available"}</p>
+					</div>
+				</div>
 			</div>
-			<hr />
-			<div className="details__container__body">
-				<div className="details__container__body__item">
-					<img src="https://via.placeholder.com/150" alt="user" />
-				</div>
-				<div className="details__container__body__item">
-					<h3>Name</h3>
-					<p>{user?.name || "Not Available"}</p>
-				</div>
-				<div className="details__container__body__item">
-					<h3>Email</h3>
-					<p>{user?.email || "Not Available"}</p>
-				</div>
-				<div className="details__container__body__item">
-					<h3>Phone</h3>
-					<p>{user?.phone || "Not Available"}</p>
-				</div>
-			</div>
-		</div>
+		</>
 	);
 };
 
