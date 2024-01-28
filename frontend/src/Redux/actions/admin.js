@@ -1,4 +1,5 @@
-import MakeProtectedApiCall from "../../util/api";
+import MakeProtectedApiCall, { isOnline } from "../../util/api";
+import { toast } from "react-toastify";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -6,6 +7,12 @@ export const HANDLE_LOGIN = ({ payload }) => {
   return async (dispatch) => {
     try {
       const url = `${baseUrl}/login`;
+
+      if (!isOnline()) {
+        toast.error("Please check your internet connection!");
+        return { success: false };
+      }
+      
       const res = await MakeProtectedApiCall(url, "post", payload);
 
       if (res?.status >= 200 && res?.status < 300) {
@@ -24,6 +31,12 @@ export const HANDLE_SIGNUP = ({ payload }) => {
 	return async (dispatch) => {
 		try {
 			const url = `${baseUrl}/signup`;
+
+      if (!isOnline()) {
+        toast.error("Please check your internet connection!");
+        return { success: false };
+      }
+
 			const res = await MakeProtectedApiCall(url, "post", payload);
 
 			if (res?.status === 200) {
