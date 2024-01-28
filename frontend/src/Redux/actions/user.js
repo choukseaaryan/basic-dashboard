@@ -2,10 +2,12 @@ import MakeProtectedApiCall from "../../util/api";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-export const GET_USERS = ({ payload = { str: "" }, id = "" }) => {
+export const GET_USERS = (payload) => {
 	return async (dispatch) => {
 		try {
-			const url = `${baseUrl}/get-users?str=${payload?.str}&id=${id}`;
+			const url = `${baseUrl}/get-users?str=${payload?.str || ""}&id=${
+				payload?.id || ""
+			}&sort=${payload?.sort || ""}`;
 			const res = await MakeProtectedApiCall(url, "get");
 
 			if (res?.status >= 200 && res?.status < 300) {
