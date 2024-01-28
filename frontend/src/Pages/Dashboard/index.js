@@ -6,6 +6,7 @@ import EditModal from "../../Components/Modal/edit";
 import AddModal from "../../Components/Modal/add";
 import NoDataComponent from "../../Components/NoDataComponent";
 import { GET_USERS } from "../../Redux/actions/user";
+import "./index.css";
 
 const HomePage = () => {
 	const navigate = useNavigate();
@@ -88,40 +89,39 @@ const HomePage = () => {
 	return (
 		<div className="dashboard__container">
 			<div className="dashboard__container__header">
-				<div className="pagination">
-					<p>
-						Showing &nbsp;
-						{
-							<select onChange={handleLimit}>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="50">50</option>
-								<option value={filteredData?.length}>
-									All
-								</option>
-							</select>
-						}
-						&nbsp; Users
-					</p>
-					<p>
-						Page: &nbsp;
-						<select value={currentPage} onChange={handlePageChange}>
-							{Array.from({ length: totalPages }, (_, i) => (
-								<option key={i + 1} value={i + 1}>
-									{i + 1}
-								</option>
-							))}
+				{/* <div className="pagination"> */}
+				<p>
+					Showing &nbsp;
+					{
+						<select onChange={handleLimit}>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option value={filteredData?.length}>All</option>
 						</select>
-						&nbsp; of {totalPages || 0}
-					</p>
-				</div>
+					}
+					&nbsp; Users
+				</p>
+				<p>
+					Page: &nbsp;
+					<select value={currentPage} onChange={handlePageChange}>
+						{Array.from({ length: totalPages }, (_, i) => (
+							<option key={i + 1} value={i + 1}>
+								{i + 1}
+							</option>
+						))}
+					</select>
+					&nbsp; of {totalPages || 0}
+				</p>
+				{/* </div> */}
 
-				<div className="filter__container">
-					<input
-						type="text"
-						placeholder="Search By Name/Email/Phone"
-						onChange={handleSearch}
-					/>
+				{/* <div className="filter__container"> */}
+				<input
+					type="text"
+					placeholder="Search By Name/Email/Phone"
+					onChange={handleSearch}
+				/>
+				<div className="sort__container">
 					<p>Sort By:</p>
 					<select onChange={handleSort}>
 						<option value="a-z">A-Z</option>
@@ -137,7 +137,7 @@ const HomePage = () => {
 						<div
 							key={user._id}
 							className="dashboard__container__body__card"
-							onClick={() => navigate(`/details/${user.id}`)}
+							onClick={() => navigate(`/details/${user._id}`)}
 						>
 							<div>
 								<p className="name__paragraph">

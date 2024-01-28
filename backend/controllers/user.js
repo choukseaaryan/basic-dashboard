@@ -5,13 +5,16 @@ const userModel = require("../models/user");
 
 const getUsers = async (req, res) => {
 	try {
-		const { str } = req.query;
+		const { str, id } = req.query;
 
 		const isNumeric = /^\d+$/.test(str);
 
-		const query = isNumeric
-			? { phone: { $regex: str, $options: "i" } }
+		let query = id ? { _id: id } : {};
+
+		query = isNumeric
+			? { ...query, phone: { $regex: str, $options: "i" } }
 			: {
+					...query,
 					$or: [
 						{ name: { $regex: str, $options: "i" } },
 						{ email: { $regex: str, $options: "i" } },

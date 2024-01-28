@@ -1,26 +1,22 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ErrorPage404 from "../Components/ErrorPage404";
-import PageLoader from "../Components/PageLoader";
-
-const Dashboard = lazy(() => import("../Pages/Dashboard"));
-const Details = lazy(() => import("../Pages/Details"));
-const Main = lazy(() => import("./main"));
-const Login = lazy(() => import("../Pages/Login"));
-const Signup = lazy(() => import("../Pages/Signup"));
+import Dashboard from "../Pages/Dashboard";
+import Details from "../Pages/Details";
+import Main from "./main";
+import Login from "../Pages/Login";
+import Signup from "../Pages/Signup";
 
 const AllRoutes = () => (
-	<Suspense fallback={<PageLoader />}>
-		<Routes>
-			<Route path="*" element={<ErrorPage404 />} />
-			<Route path="/login" element={<Login />} />
-			<Route path="/signup" element={<Signup />} />
-      <Route path="/" element={<Main />}>
-				<Route path="/" element={<Dashboard />} />
-				<Route path="/details/:userId" element={<Details />} />
-			</Route>
-		</Routes>
-	</Suspense>
+	<Routes>
+		<Route path="*" element={<ErrorPage404 />} />
+		<Route path="/login" element={<Login />} />
+		<Route path="/signup" element={<Signup />} />
+		<Route path="/" element={<Main />}>
+			<Route path="/" element={<Dashboard />} />
+			<Route path="/details/:userId" element={<Details />} />
+		</Route>
+	</Routes>
 );
 
 export default AllRoutes;

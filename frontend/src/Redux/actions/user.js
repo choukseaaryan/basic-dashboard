@@ -2,10 +2,10 @@ import MakeProtectedApiCall from "../../util/api";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-export const GET_USERS = ({ payload = { str: "" } }) => {
+export const GET_USERS = ({ payload = { str: "" }, id = "" }) => {
 	return async (dispatch) => {
 		try {
-			const url = `${baseUrl}/get-users?str=${payload?.str}`;
+			const url = `${baseUrl}/get-users?str=${payload?.str}&id=${id}`;
 			const res = await MakeProtectedApiCall(url, "get");
 
 			if (res?.status >= 200 && res?.status < 300) {
@@ -71,4 +71,4 @@ export const DELETE_USER = ({ id }) => {
 			console.log("Error deleting user: ", error);
 		}
 	};
-}
+};

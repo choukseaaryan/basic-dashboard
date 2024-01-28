@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { GET_USERS } from "../../Redux/actions/user";
 import { useParams } from "react-router-dom";
 import PageLoader from "../../Components/PageLoader";
 import ErrorPage404 from "../../Components/ErrorPage404";
@@ -6,28 +8,29 @@ import "./details.css";
 
 const Details = () => {
 	const { userId } = useParams();
+	const dispatch = useDispatch();
 	const [user, setUser] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				// const response = await axios.get(`https://reqres.in/api/users/${userId}`);
-				const data = {
-					id: 1,
-					name: "User 1",
-					email: "user@example.com",
-					phone: "123456789",
-				};
-				setUser(data);
-				setLoading(false);
+				dispatch(GET_USERS({ id: userId })).then((res) => {
+					if (res?.success) {
+						setUser(res?.data[0]);
+						setLoading(false);
+					} else {
+						setError(true);
+						setLoading(false);
+					}
+				});
 			} catch (error) {
 				setError(true);
 				setLoading(false);
 			}
 		};
 		fetchUser();
-	}, [userId]);
+	}, [dispatch, userId]);
 	if (loading) {
 		return <PageLoader />;
 	}
