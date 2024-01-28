@@ -9,7 +9,8 @@ const getUsers = async (req, res) => {
 
 		const isNumeric = /^\d+$/.test(str);
 
-		let query = id ? [{ _id: id }] : [];
+		let query = id ? { _id: id } : {};
+		let sortQuery;
 
 		if (sort) {
 			switch (sort) {
