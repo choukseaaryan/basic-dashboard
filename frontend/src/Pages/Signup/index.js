@@ -90,7 +90,7 @@ const Signup = () => {
 
 	return (
 		<div className="login">
-			<div className="login__container">
+			<div className="register__container">
 				<h1>Sign Up</h1>
 				<div className="register__form">
 					<div>
