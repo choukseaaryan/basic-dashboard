@@ -5,11 +5,31 @@ const userModel = require("../models/user");
 
 const getUsers = async (req, res) => {
 	try {
-		const { str, id } = req.query;
+		const { str, id, sort } = req.query;
 
 		const isNumeric = /^\d+$/.test(str);
 
-		let query = id ? { _id: id } : {};
+		let query = id ? [{ _id: id }] : [];
+
+		if (sort) {
+			switch (sort) {
+				case "a-z":
+					sortQuery = { name: 1 };
+					break;
+				case "z-a":
+					sortQuery = { name: -1 };
+					break;
+				case "modified":
+					sortQuery = { updatedAt: -1 };
+					break;
+				case "inserted":
+					sortQuery = { createdAt: -1 };
+					break;
+				default:
+					sortQuery = { name: 1 };
+					break;
+			}
+		}
 
 		query = isNumeric
 			? { ...query, phone: { $regex: str, $options: "i" } }
@@ -21,7 +41,7 @@ const getUsers = async (req, res) => {
 					],
 			  };
 
-		const users = await userModel.find(query);
+		const users = await userModel.find(query).sort(sortQuery);
 		if (!users) {
 			const obj = {
 				res,
@@ -39,7 +59,7 @@ const getUsers = async (req, res) => {
 
 		return response.success(obj);
 	} catch (err) {
-		console.log("Error occured: ", err);
+		console.log("Error occured in getUsers: ", err);
 		handleException(res, err);
 	}
 };
@@ -73,7 +93,7 @@ const addUser = async (req, res) => {
 
 		return response.success(obj);
 	} catch (err) {
-		console.log("Error occured: ", err);
+		console.log("Error occured in addUser: ", err);
 		handleException(res, err);
 	}
 };
@@ -111,7 +131,7 @@ const updateUser = async (req, res) => {
 
 		return response.success(obj);
 	} catch (err) {
-		console.log("Error occured: ", err);
+		console.log("Error occured in updateUser: ", err);
 		handleException(res, err);
 	}
 };
@@ -131,16 +151,17 @@ const deleteUser = async (req, res) => {
 			return response.error(obj);
 		}
 
-		await userModel.findByIdAndDelete(id);
+		const deleteUser = await userModel.findByIdAndDelete(id);
 
 		const obj = {
 			res,
 			msg: "User deleted",
+			data: deleteUser,
 		};
 
 		return response.success(obj);
 	} catch (err) {
-		console.log("Error occured: ", err);
+		console.log("Error occured in deleteUser: ", err);
 		handleException(res, err);
 	}
 };

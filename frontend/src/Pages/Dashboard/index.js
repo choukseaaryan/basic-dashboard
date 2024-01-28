@@ -19,11 +19,10 @@ const HomePage = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limit, setLimit] = useState(10);
 	const [search, setSearch] = useState("");
-	const [sort, setSort] = useState("a-z");
+	const [sort, setSort] = useState(sessionStorage.getItem("sort") || "a-z");
 	const [filteredData, setFilteredData] = useState([]);
 
 	const userData = useSelector((state) => state?.user?.users);
-
 	// const data = Array.from({ length: 100 }, (_, i) => ({
 	// 	id: i + 1,
 	// 	name: `User ${i + 1}`,
@@ -43,31 +42,9 @@ const HomePage = () => {
 	};
 
 	const handleSort = (e) => {
+		sessionStorage.setItem("sort", e.target.value);
 		setSort(e.target.value);
 	};
-	useEffect(() => {
-		if (sort === "a-z") {
-			setFilteredData((prevData) =>
-				[...prevData].sort((a, b) => a?.name?.localeCompare(b?.name))
-			);
-		} else if (sort === "z-a") {
-			setFilteredData((prevData) =>
-				[...prevData].sort((a, b) => b?.name?.localeCompare(a?.name))
-			);
-		} else if (sort === "modified") {
-			setFilteredData((prevData) =>
-				[...prevData].sort((a, b) =>
-					b?.updatedAt?.localeCompare(a?.updatedAt)
-				)
-			);
-		} else if (sort === "inserted") {
-			setFilteredData((prevData) =>
-				[...prevData].sort((a, b) =>
-					b?.createdAt?.localeCompare(a?.createdAt)
-				)
-			);
-		}
-	}, [sort]);
 
 	const startIndex = (currentPage - 1) * limit;
 	const endIndex = startIndex + limit;
@@ -78,9 +55,9 @@ const HomePage = () => {
 	};
 
 	useEffect(() => {
-		dispatch(GET_USERS({ payload: { str: search } }));
+		dispatch(GET_USERS({ str: search, sort }));
 		setCurrentPage(1);
-	}, [dispatch, search]);
+	}, [dispatch, search, sort]);
 
 	useEffect(() => {
 		setFilteredData(userData);
@@ -123,7 +100,7 @@ const HomePage = () => {
 				/>
 				<div className="sort__container">
 					<p>Sort By:</p>
-					<select onChange={handleSort}>
+					<select defaultValue={sort} onChange={handleSort}>
 						<option value="a-z">A-Z</option>
 						<option value="z-a">Z-A</option>
 						<option value="modified">Last Modified</option>

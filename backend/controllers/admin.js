@@ -34,6 +34,7 @@ const login = async (req, res) => {
 		};
 		return response.success(obj);
 	} catch (err) {
+		console.log("Error occured in login: ", err);
 		handleException(res, err);
 	}
 };
@@ -77,6 +78,7 @@ const signup = async (req, res) => {
 
 		return response.success(obj);
 	} catch (err) {
+		console.log("Error occured in signup: ", err);
 		handleException(res, err);
 	}
 };

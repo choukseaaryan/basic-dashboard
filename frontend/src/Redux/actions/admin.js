@@ -15,7 +15,7 @@ export const HANDLE_LOGIN = ({ payload }) => {
 
       return { success: false };
     } catch (error) {
-      console.log(error);
+      console.log("Error occured in HANDLE_LOGIN: ", error);
     }
   };
 };
@@ -32,7 +32,7 @@ export const HANDLE_SIGNUP = ({ payload }) => {
 			}
 			return { success: false };
 		} catch (error) {
-			console.log(error);
+      console.log("Error occured in HANDLE_SIGNUP: ", error);
 		}
 	};
 };
