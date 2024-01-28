@@ -111,3 +111,7 @@ const MakeProtectedApiCall = async (apiPath, method, bodyData = {}) => {
 };
 
 export default MakeProtectedApiCall;
+
+export const isOnline = () => {
+	return window.navigator.onLine;
+}
