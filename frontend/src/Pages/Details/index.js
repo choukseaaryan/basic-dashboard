@@ -17,7 +17,7 @@ const Details = () => {
 			try {
 				dispatch(GET_USERS({ id: userId })).then((res) => {
 					if (res?.success) {
-						setUser(res?.data[0]);
+						res?.data && setUser(res?.data[0]);
 						setLoading(false);
 					} else {
 						setError(true);
