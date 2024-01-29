@@ -1,3 +1,13 @@
+**Note:** If you would like to view the project without setting it up on your local machine, I have deployed it on <br />
+`https://basic-dashboard-omega.vercel.app/`<br /><br />
+
+Demo credentials:<br />
+Email: demo@gmail.com<br />
+Password: demo123<br />
+(These are valid for locally set up project too)<br /><br />
+
+**Note**(again)**:** If you are visiting the deployed website, please wait for a few seconds after submitting login or signup form as the backend server is hosted on the free tier of Render due to which it shuts down the server after a period of inactivity. It will start once an API is called.  
+
 # Steps to run the project locally
 
 <br/>
