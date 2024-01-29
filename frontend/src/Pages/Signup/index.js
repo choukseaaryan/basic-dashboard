@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { HANDLE_SIGNUP } from "../../Redux/actions/admin";
+import PageLoader from "../../Components/PageLoader";
 
 const Signup = () => {
 	const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Signup = () => {
 	});
 
 	const [showPassword, setShowPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const cityArray = ["Mumbai", "Pune", "Ahmedabad"];
 	const stateArray = ["Gujarat", "Maharashtra", "Karnataka"];
@@ -26,6 +28,7 @@ const Signup = () => {
 	};
 
 	const submitHandler = () => {
+		setLoading(true);
 		const { email, password, name, phone, gender, source, city, state } =
 			data;
 
@@ -63,6 +66,7 @@ const Signup = () => {
 
 		dispatch(HANDLE_SIGNUP({ payload: data })).then((res) => {
 			if (res?.success) {
+				setLoading(false);
 				window.location.href = "/login";
 			}
 		});
@@ -88,7 +92,8 @@ const Signup = () => {
 		}
 	};
 
-	return (
+	return (<>
+		{loading && <PageLoader />}
 		<div className="login">
 			<div className="register__container">
 				<h1>Sign Up</h1>
@@ -258,6 +263,7 @@ const Signup = () => {
 				</p>
 			</div>
 		</div>
+	</>
 	);
 };
 
