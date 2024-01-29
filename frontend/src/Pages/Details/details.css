@@ -9,6 +9,7 @@
 }
 
 .details__container__body {
+	background-color: white;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

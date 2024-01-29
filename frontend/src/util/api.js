@@ -25,13 +25,35 @@ const AlertSuccess = (text) => {
 	);
 };
 
-const MakeProtectedApiCall = async (apiPath, method, bodyData = {}) => {
+let cancelTokens = {};
+
+const MakeProtectedApiCall = async (
+	apiPath,
+	method,
+	bodyData = {},
+	requestKey
+) => {
+	if (requestKey) {
+		if (cancelTokens[requestKey]) {
+			cancelTokens[requestKey].cancel(
+				"Operation canceled due to new request."
+			);
+		}
+
+		cancelTokens[requestKey] = axios.CancelToken.source();
+	}
+
 	switch (method.toLowerCase()) {
 		case "get":
 			try {
-				const res = await axios.get(apiPath);
+				const res = await axios.get(apiPath, {
+					cancelToken: cancelTokens[requestKey]?.token,
+				});
 				return res;
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return { status: 200 };
+				}
 				const msg = error.response?.data?.msg;
 				AlertError(msg);
 				toast.clearWaitingQueue();
@@ -114,4 +136,4 @@ export default MakeProtectedApiCall;
 
 export const isOnline = () => {
 	return window.navigator.onLine;
-}
+};

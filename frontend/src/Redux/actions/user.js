@@ -15,7 +15,7 @@ export const GET_USERS = (payload) => {
 				payload?.id || ""
 			}&sort=${payload?.sort || ""}`;
 
-			const res = await MakeProtectedApiCall(url, "get");
+			const res = await MakeProtectedApiCall(url, "get", undefined, "getUsers");
 			if (res?.status >= 200 && res?.status < 300) {
 				dispatch({ type: "GET_USERS", data: res?.data?.data });
 				return { success: true, data: res?.data?.data };
