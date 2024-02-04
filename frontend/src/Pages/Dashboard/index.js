@@ -66,7 +66,6 @@ const HomePage = () => {
 	return (
 		<div className="dashboard__container">
 			<div className="dashboard__container__header">
-				{/* <div className="pagination"> */}
 				<p>
 					Showing &nbsp;
 					{
@@ -90,9 +89,7 @@ const HomePage = () => {
 					</select>
 					&nbsp; of {totalPages || 0}
 				</p>
-				{/* </div> */}
 
-				{/* <div className="filter__container"> */}
 				<input
 					type="text"
 					placeholder="Search By Name/Email/Phone"
@@ -109,8 +106,8 @@ const HomePage = () => {
 				</div>
 			</div>
 			<div className="dashboard__container__body">
-				{filteredData ? (
-					currentItems.map((user) => (
+				{!(filteredData && filteredData.length === 0) ? (
+					currentItems?.map((user) => (
 						<div
 							key={user._id}
 							className="dashboard__container__body__card"

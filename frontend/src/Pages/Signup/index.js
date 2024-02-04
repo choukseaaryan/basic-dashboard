@@ -227,7 +227,7 @@ const Signup = () => {
 						<h4>City</h4>
 						<select onChange={changeHandler} name="city">
 							<option value="">Select city</option>
-							{cityArray.map((city, i) => {
+							{cityArray?.map((city, i) => {
 								return (
 									<option key={i} value={city}>
 										{city}
@@ -244,7 +244,7 @@ const Signup = () => {
 							onChange={changeHandler}
 						/>
 						<datalist id="states">
-							{stateArray.map((state, i) => {
+							{stateArray?.map((state, i) => {
 								return <option key={i} value={state} />;
 							})}
 						</datalist>
