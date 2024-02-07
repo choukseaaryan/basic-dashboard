@@ -1,11 +1,10 @@
-**Note:** If you would like to view the project without setting it up on your local machine, I have deployed it on <br />
-`https://basic-dashboard-omega.vercel.app/`<br /><br />
+**Note:** If you would like to view the project without setting it up on your local machine, I have deployed it [here](https://basic-dashboard-omega.vercel.app/)<br /><br />
+
+If you are visiting the deployed website, please wait for a few seconds after submitting login or signup form as the backend server is hosted on the free tier of Render due to which it shuts down the server after a period of inactivity. It will start once an API is called.<br /><br />
 
 Demo credentials:<br />
 Email: demo@gmail.com<br />
 Password: demo123<br /><br />
-
-If you are visiting the deployed website, please wait for a few seconds after submitting login or signup form as the backend server is hosted on the free tier of Render due to which it shuts down the server after a period of inactivity. It will start once an API is called.<br /><br />
 
 **Before following the steps below, please ensure that you have node and mongo installed on your machine.**
 
